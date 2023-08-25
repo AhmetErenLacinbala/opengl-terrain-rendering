@@ -1,0 +1,24 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(lldb) Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/../opengl-terrian-build/terrarian-render",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/../opengl-terrian-build/",
+            "targetArchitecture": "arm64", 
+            "environment": [
+                {
+                    "name": "LIBGL_ALWAYS_SOFTWARE",
+                    "value": "1"
+                }
+            ],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "Make"
+        }
+    ]
+}
