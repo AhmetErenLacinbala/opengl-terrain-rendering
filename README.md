@@ -1,4 +1,4 @@
 # opengl-terrain-rendering
 
-this project made help of OGL_Dev's tutorials
+this project has been made by help of OGL_Dev's tutorials: 
 https://www.youtube.com/@OGLDEV
