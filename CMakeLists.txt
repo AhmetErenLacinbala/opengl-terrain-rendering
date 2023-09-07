@@ -29,7 +29,6 @@ set(PROJECT_INCLUDE_DIR
 set(OGL_DEV ${PROJECT_DIR}/include/ogl_dev)  # Path to ogl_dev directory
 
 set(PROJECT_SOURCES
-    ${PROJECT_SOURCE_DIR}/glad.c
     ${PROJECT_SOURCE_DIR}/technique.cpp
     ${PROJECT_SOURCE_DIR}/main.cpp
     ${PROJECT_SOURCE_DIR}/terrain_technique.cpp
@@ -37,6 +36,8 @@ set(PROJECT_SOURCES
     ${PROJECT_SOURCE_DIR}/triangle_list.cpp
     ${PROJECT_SOURCE_DIR}/vertexArrayObject.cpp
     ${PROJECT_SOURCE_DIR}/shader.cpp
+    ${PROJECT_SOURCE_DIR}/mesh.cpp
+    ${PROJECT_SOURCE_DIR}/shaderProgram.cpp
     ${OGL_DEV}/ogldev_basic_glfw_camera.cpp
     ${OGL_DEV}/ogldev_glfw.cpp
     ${OGL_DEV}/ogldev_util.cpp

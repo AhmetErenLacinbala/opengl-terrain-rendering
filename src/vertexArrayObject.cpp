@@ -1,6 +1,6 @@
 #include "vertexArrayObject.hpp"
 #include "vertexTypes.hpp"
-#include <glad/glad.h>
+#include <GL/glew.h>
 
 
 VertexArrayObject::VertexArrayObject(){

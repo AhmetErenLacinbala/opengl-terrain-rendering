@@ -6,7 +6,9 @@
 #include "ogl_dev/ogldev_array_2d.h"
 #include "triangle_list.h"
 #include "terrain_technique.h"
+#include "shaderProgram.h"
 
+class ShaderProgram;
 
 class BaseTerrain
 {

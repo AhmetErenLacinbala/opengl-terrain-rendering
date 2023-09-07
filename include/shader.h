@@ -8,7 +8,7 @@ class Shader {
 public:
     Shader();
     ~Shader();
-
+    void Delete();
     bool Load(GLenum shaderType, const std::string& filename);
     GLuint GetObj() const;
 

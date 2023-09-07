@@ -1,4 +1,4 @@
-#include "Shader.h"
+#include <shader.h>
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -46,4 +46,12 @@ bool Shader::Load(GLenum shaderType, const std::string& filename) {
 
 GLuint Shader::GetObj() const {
     return m_shaderObj;
+}
+
+
+void Shader::Delete() {
+    if (m_shaderObj) {
+        glDeleteShader(m_shaderObj);
+        m_shaderObj = 0; // Reset to signify shader object has been deleted
+    }
 }

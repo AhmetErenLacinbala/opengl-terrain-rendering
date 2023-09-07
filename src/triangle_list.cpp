@@ -64,6 +64,10 @@ void TriangleList::PopulateBuffers(const BaseTerrain* pTerrain)
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices[0]) * Vertices.size(), &Vertices[0], GL_STATIC_DRAW);
 
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Indices[0]) * Indices.size(), &Indices[0], GL_STATIC_DRAW);
+	GLenum err;
+    while ((err = glGetError()) != GL_NO_ERROR) {
+        printf("OpenGL error after PopulateBuffers: %d\n", err);
+    }
 }
 
 
@@ -133,4 +137,9 @@ void TriangleList::Render()
 	glDrawElements(GL_TRIANGLES, (m_depth - 1) * (m_width - 1) * 6, GL_UNSIGNED_INT, NULL);
 
 	glBindVertexArray(0);
+    
+    GLenum err;
+    while ((err = glGetError()) != GL_NO_ERROR) {
+        printf("OpenGL error after Render: %d\n", err);
+    }
 }
