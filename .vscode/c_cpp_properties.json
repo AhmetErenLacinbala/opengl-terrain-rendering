@@ -8,7 +8,8 @@
                 "/opt/homebrew/include",
                 "/opt/homebrew/Cellar/glew/2.2.0_1/include",
                 "${workspaceFolder}/include",
-                "/usr/local/include"
+                "/usr/local/include",
+                "${workspaceFolder}/include"
             ],
             "defines": [],
             "macFrameworkPath": [

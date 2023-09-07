@@ -1,37 +1,24 @@
 #ifndef TECHNIQUE_H
 #define TECHNIQUE_H
 
-#include <list>
 #include <GL/glew.h>
+#include <list>
+#include "Shader.h"
 
-class Technique
-{
+class Technique {
 public:
-
-
     Technique();
     virtual ~Technique();
-    virtual bool Init();
-    void Enable();
-    GLuint GetProgram() const { return m_shaderProg; }
-
-
-protected:
-
+    
+    bool Init();
     bool AddShader(GLenum ShaderType, const char* pFilename);
     bool Finalize();
+    void Enable();
     GLint GetUniformLocation(const char* pUniformName);
-    GLuint m_shaderProg = 0;
 
 private:
-    typedef std::list<GLuint> ShaderObjList;
-    ShaderObjList m_shaderObjList;
+    std::list<Shader> m_shaders;
+    GLuint m_shaderProg;
 };
 
-
-
-
-
-
-
-#endif  /* TECHNIQUE_H */
+#endif  // TECHNIQUE_H

@@ -1,21 +1,3 @@
-/*
-
-        Copyright 2011 Etay Meiri
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
 #include <stdio.h>
 #include <string.h>
 
@@ -28,15 +10,8 @@ Technique::Technique()
 }
 
 
-Technique::~Technique()
-{
-    for (ShaderObjList::iterator it = m_shaderObjList.begin() ; it != m_shaderObjList.end() ; it++)
-    {
-        glDeleteShader(*it);
-    }
-
-    if (m_shaderProg != 0)
-    {
+Technique::~Technique() {
+    if (m_shaderProg != 0) {
         glDeleteProgram(m_shaderProg);
         m_shaderProg = 0;
     }
@@ -55,43 +30,13 @@ bool Technique::Init()
     return true;
 }
 
-bool Technique::AddShader(GLenum ShaderType, const char* pFilename)
-{
-    string s;
-
-    if (!ReadFile(pFilename, s)) {
+bool Technique::AddShader(GLenum ShaderType, const char* pFilename) {
+    Shader shader;
+    if (!shader.Load(ShaderType, pFilename)) {
         return false;
     }
-
-    GLuint ShaderObj = glCreateShader(ShaderType);
-
-    if (ShaderObj == 0) {
-        fprintf(stderr, "Error creating shader type %d\n", ShaderType);
-        return false;
-    }
-
-    m_shaderObjList.push_back(ShaderObj);
-
-    const GLchar* p[1];
-    p[0] = s.c_str();
-    GLint Lengths[1] = { (GLint)s.size() };
-
-    glShaderSource(ShaderObj, 1, p, Lengths);
-
-    glCompileShader(ShaderObj);
-
-    GLint success;
-    glGetShaderiv(ShaderObj, GL_COMPILE_STATUS, &success);
-
-    if (!success) {
-        GLchar InfoLog[1024];
-        glGetShaderInfoLog(ShaderObj, 1024, NULL, InfoLog);
-        fprintf(stderr, "Error compiling '%s': '%s'\n", pFilename, InfoLog);
-        return false;
-    }
-
-    glAttachShader(m_shaderProg, ShaderObj);
-
+    m_shaders.push_back(shader);
+    glAttachShader(m_shaderProg, shader.GetObj());
     return true;
 }
 
@@ -119,7 +64,6 @@ bool Technique::Finalize()
         fprintf(stderr, "Invalid shader program: '%s'\n", ErrorLog);
     }
 
-    // Delete the intermediate shader objects that have been added to the program
     for (ShaderObjList::iterator it = m_shaderObjList.begin() ; it != m_shaderObjList.end() ; it++) {
         glDeleteShader(*it);
     }
