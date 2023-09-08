@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <iostream>
 #include <stdlib.h>
 #include <assert.h>
 #include <sys/types.h>
@@ -9,6 +10,8 @@
 #include "terrain.h"
 
 //#define DEBUG_PRINT
+
+
 
 void BaseTerrain::InitTerrain(float WorldScale)
 {
@@ -51,15 +54,15 @@ void BaseTerrain::LoadHeightMapFile(const char* pFilename)
     m_heightMap.InitArray2D(m_terrainSize, m_terrainSize, (float*)p);
 }
 
-
-void BaseTerrain::Render(const BasicCamera& Camera)
-{
-    Matrix4f VP = Camera.GetViewProjMatrix();
-
-    m_terrainTech.Enable();
-    m_terrainTech.SetVP(VP);
-
-    m_triangleList.Render();
+void BaseTerrain::Render(const BasicCamera& globalCamera) {
+    BasicCamera& globalCamera = BasicCamera::GetInstance();
+    Render(globalCamera);
 }
 
+float BaseTerrain::GetHeight(int x, int z) const {
+    return m_heightMap.Get(x, z);
+}
 
+float BaseTerrain::GetWorldScale() const {
+    return m_worldScale;
+}

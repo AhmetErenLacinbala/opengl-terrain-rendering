@@ -38,6 +38,10 @@ set(PROJECT_SOURCES
     ${PROJECT_SOURCE_DIR}/shader.cpp
     ${PROJECT_SOURCE_DIR}/mesh.cpp
     ${PROJECT_SOURCE_DIR}/shaderProgram.cpp
+    ${PROJECT_SOURCE_DIR}/baseTerrain.cpp
+    ${PROJECT_SOURCE_DIR}/scene.cpp
+    ${PROJECT_SOURCE_DIR}/ResourceManager.cpp
+    ${PROJECT_SOURCE_DIR}/cube.cpp
     ${OGL_DEV}/ogldev_basic_glfw_camera.cpp
     ${OGL_DEV}/ogldev_glfw.cpp
     ${OGL_DEV}/ogldev_util.cpp
