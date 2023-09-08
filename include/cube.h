@@ -1,7 +1,7 @@
 #pragma once
 
-#include "GameObject.h"
 #include <GL/glew.h>
+#include "gameObject.h"
 
 class Cube : public GameObject {
 private:
@@ -17,5 +17,5 @@ public:
     Cube();
     ~Cube();  // Destructor to clean up the buffers
     void Update(float dt) override;
-    void Render() override;
+    void Render(const BasicCamera& Camera) override;
 };

@@ -17,8 +17,8 @@ public:
     bool OnKeyboard(int Key);
     void OnMouse(int x, int y);
     void OnRender();
-    void Init() {}
-    Matrix4f GetProjectionMat() const {}
+    void Init();
+    Matrix4f GetProjectionMat() const;
 
     Matrix4f GetMatrix() const;
     Matrix4f GetViewProjMatrix() const;
@@ -29,22 +29,17 @@ private:
     BasicCamera(const BasicCamera &) = delete;            // Disable the copy constructor
     BasicCamera &operator=(const BasicCamera &) = delete; // Disable the assignment operator
 
-    // Your private members...
     Vector3f m_pos, m_target, m_up;
     int m_windowWidth, m_windowHeight;
-    // ... Add more members as needed ...
 
     void Update();
-    Vector3f m_target; // Assuming Vector3f is a 3D vector class
     float m_AngleH;
     float m_AngleV;
     bool m_OnUpperEdge;
     bool m_OnLowerEdge;
     bool m_OnLeftEdge;
     bool m_OnRightEdge;
-    Vector2f m_mousePos; // Assuming Vector2f is a 2D vector class
-    int m_windowWidth;
-    int m_windowHeight;
+    Vector2f m_mousePos;
     float m_speed;
 
     static const int DEFAULT_WIDTH = 800;  // Default width

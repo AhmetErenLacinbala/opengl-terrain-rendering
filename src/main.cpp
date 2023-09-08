@@ -11,11 +11,11 @@
 #include <glm/vec2.hpp>
 #include <vertexTypes.hpp>
 
-#include "Shader.h"
-#include "ShaderProgram.h"
-#include "Mesh.h"
-#include "GameObject.h"
-#include "Scene.h"
+#include "shader.h"
+#include "shaderProgram.h"
+#include "mesh.h"
+#include "gameObject.h"
+#include "scene.h"
 #include "cube.h"
 #include "terrain.h"
 
@@ -39,7 +39,7 @@ class TerrainDemo1 : public GameObject
 {
 
 private:
-    Cube m_cube;
+    //Cube m_cube;
     Scene m_scene;
 
 public:
@@ -61,7 +61,7 @@ public:
         InitCamera();
         InitTerrain();
         m_scene.AddObject(&m_terrain);
-        m_scene.AddObject(&m_cube);
+        //m_scene.AddObject(&m_cube);
         
     }
 
@@ -96,7 +96,7 @@ public:
        
     }
 
-    void Render() override
+    void Render(const BasicCamera& Camera) override
     {
         RenderScene();
     }

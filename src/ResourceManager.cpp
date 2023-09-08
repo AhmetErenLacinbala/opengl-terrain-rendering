@@ -5,7 +5,12 @@ ShaderProgram& ResourceManager::getShader(const std::string& name) {
 }
 
 Mesh& ResourceManager::getMesh(const std::string& name) {
-    return meshes[name];
+    auto it = meshes.find(name);
+if (it != meshes.end()) {
+    return it->second;
+} else {
+    printf("mesh is not found\n");
+}
 }
 
 // Similarly for set operations and other resource types

@@ -1,5 +1,6 @@
-#include "Cube.h"
+#include "cube.h"
 #include <GL/glew.h>
+#include <ogl_dev/ogldev_basic_glfw_camera.h>
 
 Cube::Cube() {
     // Define vertices for a cube
@@ -52,7 +53,7 @@ Cube::Cube() {
     }
 
     // Set up vertex array and vertex buffer objects
-    glGenVertexArrays(1, &VAO);
+    /*glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
 
     glBindVertexArray(VAO);
@@ -64,7 +65,7 @@ Cube::Cube() {
     glEnableVertexAttribArray(0);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0); 
-    glBindVertexArray(0); 
+    glBindVertexArray(0); */
 }
 
 Cube::~Cube() {
@@ -73,11 +74,10 @@ Cube::~Cube() {
 }
 
 void Cube::Update(float dt) {
-    // Assuming the cube doesn't need dynamic updates for this example.
-    // If you need animations or other dynamic behaviors, implement them here.
+
 }
 
-void Cube::Render() {
+void Cube::Render(const BasicCamera& Camera) {
     // Bind the VAO and render the cube
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);

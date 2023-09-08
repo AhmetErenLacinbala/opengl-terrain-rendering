@@ -137,3 +137,15 @@ void BasicCamera::SetSpeed(float Speed) {
     }
     m_speed = Speed;
 }
+
+
+Matrix4f BasicCamera::GetProjectionMat() const {
+    float fov = 45.0f;
+    float nearPlane = 0.1f;
+    float farPlane = 100.0f;
+    float aspectRatio = static_cast<float>(m_windowWidth) / m_windowHeight;
+    
+    Matrix4f projectionMat;
+    projectionMat.InitPerspectiveProj(fov, aspectRatio, nearPlane, farPlane);
+    return projectionMat;
+}

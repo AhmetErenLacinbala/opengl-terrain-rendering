@@ -8,17 +8,20 @@
 #include "terrain_technique.h"
 #include "shaderProgram.h"
 #include "gameObject.h"
+#include "ogl_dev/ogldev_basic_glfw_camera.h"
 
 class ShaderProgram;
+class BasicCamera;
 
 class BaseTerrain : public GameObject {
 public:
-    BaseTerrain();
+    BaseTerrain(){};
     void InitTerrain(float WorldScale);
     void Render(const BasicCamera& Camera);
     void LoadFromFile(const char* pFilename);
     float GetHeight(int x, int z) const;
     float GetWorldScale() const;
+	void Update(float dt){};
     //void Render() override;
 
 protected:

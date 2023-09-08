@@ -26,9 +26,11 @@ void BaseTerrain::InitTerrain(float WorldScale)
 
 void BaseTerrain::LoadFromFile(const char* pFilename)
 {
+    printf("loadfine start \n");
     LoadHeightMapFile(pFilename);
 
     m_triangleList.CreateTriangleList(m_terrainSize, m_terrainSize, this);
+    printf("loadfile end \n");
 }
 
 
@@ -55,8 +57,9 @@ void BaseTerrain::LoadHeightMapFile(const char* pFilename)
 }
 
 void BaseTerrain::Render(const BasicCamera& globalCamera) {
-    BasicCamera& globalCamera = BasicCamera::GetInstance();
+    printf("base Terrain render start\n");
     Render(globalCamera);
+    printf("base terreain render end\n");
 }
 
 float BaseTerrain::GetHeight(int x, int z) const {
