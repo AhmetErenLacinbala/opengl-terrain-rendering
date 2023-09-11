@@ -41,16 +41,18 @@ class TerrainDemo1 : public GameObject
 private:
     //Cube m_cube;
     Scene m_scene;
+    BasicCamera* m_gameCamera = nullptr;
 
 public:
-
+    
     TerrainDemo1()
     {
+         m_gameCamera = new BasicCamera();
     }
 
     virtual ~TerrainDemo1()
     {
-        SAFE_DELETE(m_pGameCamera);
+        delete m_gameCamera;
     }
 
 
@@ -82,14 +84,14 @@ public:
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        m_terrain.Render(*m_pGameCamera);
+        m_terrain.Render(*m_gameCamera);
         m_scene.Render();
     }
 
 
     void PassiveMouseCB(int x, int y)
     {
-        m_pGameCamera->OnMouse(2*x, 2*y);
+        m_gameCamera->OnMouse(2*x, 2*y);
     }
     void Update(float dt) override
     {
@@ -129,7 +131,7 @@ public:
             }
         }
 
-        m_pGameCamera->OnKeyboard(key);
+        m_gameCamera->OnKeyboard(key);
     }
 
 
@@ -185,24 +187,20 @@ private:
     }
     void InitCamera()
     {
-        Vector3f Pos(100.0f, 220.0f, -400.0f);
-        Vector3f Target(0.0f, -0.25f, 1.0f);
-        Vector3f Up(0.0, 1.0f, 0.0f);
-        float zFar = 2000.0f;
-        float FOV = 45.0f;
-        float zNear = 0.1f;
-        PersProjInfo persProjInfo = { FOV, (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT, zNear, zFar };
-        m_pGameCamera = &BasicCamera::GetInstance();
+    glm::vec3 Pos(100.0f, 220.0f, -400.0f);
+    glm::vec3 Target(0.0f, -0.25f, 1.0f);
+    m_gameCamera->SetPosition(Pos);
+    m_gameCamera->SetLookAt(Target);
     }
     void InitTerrain()
     {
         float WorldScale = 4.0f;
         m_terrain.InitTerrain(WorldScale);
-        m_terrain.LoadFromFile("heightmap.save");	
+        m_terrain.LoadHeightMapFile("heightmap.save");	
     }
 
     GLFWwindow* window = NULL;
-    BasicCamera* m_pGameCamera = NULL;
+    
     bool m_isWireframe = false;
     BaseTerrain m_terrain;
 };

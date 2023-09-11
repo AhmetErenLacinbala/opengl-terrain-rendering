@@ -19,6 +19,11 @@ Mesh::Mesh(const std::vector<float>& vertices, const std::vector<unsigned int>& 
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+        GLenum error = glGetError();
+if (error != GL_NO_ERROR) {
+    // Handle/report the error. You can use a switch or if-statements to decode the error type.
+    std::cerr << "OpenGL Error: " << error << std::endl;
+}
 }
 
 Mesh::~Mesh() {
@@ -30,6 +35,11 @@ Mesh::~Mesh() {
 void Mesh::Draw(const ShaderProgram& program) const {
     program.Use();
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0); // Use the stored indexCount
+    glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
+
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR) {
+        std::cerr << "OpenGL Error: " << error << std::endl;
+    }
 }

@@ -10,9 +10,8 @@ void Scene::Update(float dt) {
     }
 }
 
-void Scene::Render() {
-    BasicCamera& globalCamera = BasicCamera::GetInstance();
+    void Scene::Render() {
     for (auto& obj : gameObjects) {
-        obj->Render(globalCamera);
+        obj->Render(m_camera); // pass the camera to the render function
     }
 }
