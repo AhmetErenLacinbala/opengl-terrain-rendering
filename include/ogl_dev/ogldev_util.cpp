@@ -158,22 +158,6 @@ void WriteBinaryFile(const char* pFilename, const void* pData, int size)
     }
 
     fclose(f);
-
-    /*    int f = open(pFilename, O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
-
-    if (f == -1) {
-        OGLDEV_ERROR("Error opening '%s': %s\n", pFilename, strerror(errno));
-        exit(0);
-    }
-
-    int write_len = write(f, pData, size);
-    printf("%d\n", write_len);
-    if (write_len != size) {
-        OGLDEV_ERROR("Error write file: %s\n", strerror(errno));
-        exit(0);
-    }
-
-    close(f);*/
 }
 
 

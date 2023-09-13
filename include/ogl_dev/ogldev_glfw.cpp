@@ -6,6 +6,23 @@
 #include "ogldev_util.h"
 #include "ogldev_glfw.h"
 
+
+
+static void enable_debug_output()
+{
+    // Check if debug extensions are supported
+    if (!glewIsSupported("GL_KHR_debug") && !glewIsSupported("GL_ARB_debug_output"))
+    {
+        fprintf(stderr, "Debug extensions not supported!\n");
+        return;
+    }
+
+    glEnable(GL_DEBUG_OUTPUT);
+    glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+    glDebugMessageCallback(glDebugOutput, nullptr);
+    glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_HIGH, 0, nullptr, GL_TRUE);
+}
+
 static void glfw_lib_init()
 {
     if (glfwInit() != 1)
@@ -21,18 +38,10 @@ static void glfw_lib_init()
     printf("GLFW %d.%d.%d initialized\n", Major, Minor, Rev);
 }
 
-static void enable_debug_output()
-{
-    glEnable(GL_DEBUG_OUTPUT);
-    glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-    glDebugMessageCallback(glDebugOutput, nullptr); // expection error here
-    glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_HIGH, 0, nullptr, GL_TRUE);
-}
-
 // Must be done after glfw is initialized!
 static void init_glew()
 {
-    glewExperimental = GL_TRUE;
+   glewExperimental = GL_TRUE;
     GLenum glewError = glewInit();
     if (glewError != GLEW_OK)
     {
@@ -48,6 +57,7 @@ GLFWwindow *glfw_init(int major_ver, int minor_ver, int width, int height, bool 
 
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
 
     if (major_ver > 0)
     {
@@ -78,7 +88,9 @@ GLFWwindow *glfw_init(int major_ver, int minor_ver, int width, int height, bool 
     // Must be done after glfw is initialized!
     init_glew();
 
-    //enable_debug_output(); // expection error. fix here
+    enable_debug_output(); // expection error. fix here
+
+    while (glGetError() != GL_NO_ERROR);
 
     glfwSwapInterval(1);
     return window;
