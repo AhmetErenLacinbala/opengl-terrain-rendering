@@ -41,18 +41,18 @@ class TerrainDemo1 : public GameObject
 private:
     //Cube m_cube;
     Scene m_scene;
-    BasicCamera* m_gameCamera = nullptr;
+    GLFWwindow* window = NULL;
 
 public:
     
-    TerrainDemo1()
+    TerrainDemo1(GLFWwindow* Currentwindow)
     {
-         m_gameCamera = new BasicCamera();
+        window = Currentwindow;
     }
 
     virtual ~TerrainDemo1()
     {
-        delete m_gameCamera;
+        delete m_pGameCamera;
     }
 
 
@@ -84,14 +84,14 @@ public:
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        m_terrain.Render(*m_gameCamera);
+        m_terrain.Render(*m_pGameCamera);
         m_scene.Render();
     }
 
 
     void PassiveMouseCB(int x, int y)
     {
-        m_gameCamera->OnMouse(2*x, 2*y);
+        m_pGameCamera->OnMouse(2*x, 2*y);
     }
     void Update(float dt) override
     {
@@ -131,7 +131,7 @@ public:
             }
         }
 
-        m_gameCamera->OnKeyboard(key);
+        m_pGameCamera->OnKeyboard(key);
     }
 
 
@@ -170,14 +170,9 @@ private:
         printf("Renderer: %s\n", renderer);
         printf("OpenGL version: %s\n", version);
     }
-    void CreateWindow()
-    {
-        int minor_ver = 1;
-        int major_ver = 4;
-        bool is_full_screen = false;
-        window = glfw_init(major_ver, minor_ver, WINDOW_WIDTH, WINDOW_HEIGHT, is_full_screen, "terrain rendering");
-        glfwSetCursorPos(window, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
-    }
+void CreateWindow() {
+
+}
 
     void InitCallbacks()
     {
@@ -185,12 +180,16 @@ private:
         glfwSetCursorPosCallback(window, CursorPosCallback);
         glfwSetMouseButtonCallback(window, MouseButtonCallback);
     }
-    void InitCamera()
+   void InitCamera()
     {
-    glm::vec3 Pos(100.0f, 220.0f, -400.0f);
-    glm::vec3 Target(0.0f, -0.25f, 1.0f);
-    m_gameCamera->SetPosition(Pos);
-    m_gameCamera->SetLookAt(Target);
+        Vector3f Pos(100.0f, 220.0f, -400.0f);
+        Vector3f Target(0.0f, -0.25f, 1.0f);
+        Vector3f Up(0.0, 1.0f, 0.0f);
+        float zFar = 2000.0f;
+        float FOV = 45.0f;
+        float zNear = 0.1f;
+        PersProjInfo persProjInfo = { FOV, (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT, zNear, zFar };
+        m_pGameCamera = new BasicCamera(persProjInfo, Pos, Target, Up);
     }
     void InitTerrain()
     {
@@ -199,10 +198,11 @@ private:
         m_terrain.LoadHeightMapFile("heightmap.save");	
     }
 
-    GLFWwindow* window = NULL;
+    
     
     bool m_isWireframe = false;
     BaseTerrain m_terrain;
+    BasicCamera* m_pGameCamera = NULL;
 };
 
 TerrainDemo1* app = NULL;
@@ -232,8 +232,22 @@ static void MouseButtonCallback(GLFWwindow* window, int Button, int Action, int 
 
 int main(int argc, char** argv)
 {
-    setenv("LIBGL_ALWAYS_SOFTWARE", "1", 1);
-    app = new TerrainDemo1();
+    GLFWwindow* window = NULL;
+        int minor_ver = 1;
+    int major_ver = 4;
+    bool is_full_screen = false;
+    window = glfw_init(major_ver, minor_ver, WINDOW_WIDTH, WINDOW_HEIGHT, is_full_screen, "terrain rendering");
+    glfwSetCursorPos(window, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+
+    // Initialize GLEW
+    glewExperimental = GL_TRUE; 
+    GLenum err = glewInit();
+    if (err != GLEW_OK) {
+        fprintf(stderr, "Error initializing GLEW: %s\n", glewGetErrorString(err));
+        exit(-1);
+    }
+    //setenv("LIBGL_ALWAYS_SOFTWARE", "1", 1);
+    app = new TerrainDemo1(window);
 
     app->Init();
     

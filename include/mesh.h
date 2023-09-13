@@ -7,6 +7,7 @@ class Mesh {
 private:
     GLuint VAO, VBO, EBO;
     size_t indexCount; // Member to keep track of index count
+    void CheckOpenGLError(const char* functionName) const;
 
 public:
      Mesh() : indexCount(0), VAO(0), VBO(0), EBO(0) {} // Added default constructor
